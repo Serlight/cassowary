@@ -71,8 +71,7 @@ final class OCUnitTestEngine extends ArcanistBaseUnitTestEngine {
             chdir($path);
 
             $result_location = tempnam(sys_get_temp_dir(), 'arctestresults.phab');
-            exec(phutil_get_library_root("libcassowary").
-              "/../../externals/xctool/xctool.sh -reporter phabricator:".$result_location." test");
+            exec(xctool -reporter phabricator:".$result_location."build test");
             $xctool_test_results = json_decode(file_get_contents($result_location), true);
             unlink($result_location);
 
@@ -92,7 +91,7 @@ final class OCUnitTestEngine extends ArcanistBaseUnitTestEngine {
         $build_dir_output = array();
         $_ = 0;
         exec("xcodebuild -showBuildSettings | grep PROJECT_TEMP_DIR -m1 | grep -o '/.\+$'", $build_dir_output, $_);
-        $build_dir_output[0] .= "/Debug-iphonesimulator/UnitTests.build/Objects-normal/i386/";
+        $build_dir_output[0] .= "/Debug-iphonesimulator/curesTests.build/Objects-normal/i386/";
         chdir($build_dir_output[0]);
         exec("gcov * > /dev/null 2> /dev/null");
 
