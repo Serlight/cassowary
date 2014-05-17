@@ -71,7 +71,7 @@ final class OCUnitTestEngine extends ArcanistBaseUnitTestEngine {
             chdir($path);
 
             $result_location = tempnam(sys_get_temp_dir(), 'arctestresults.phab');
-            exec(xctool -reporter phabricator:".$result_location."build test");
+            exec("xctool -reporter phabricator:".$result_location." build run-tests");
             $xctool_test_results = json_decode(file_get_contents($result_location), true);
             unlink($result_location);
 
