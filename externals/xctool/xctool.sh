@@ -1,1 +1,1 @@
-xctool run-test
+xctool run-tests
